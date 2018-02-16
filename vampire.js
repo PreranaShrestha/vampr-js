@@ -32,46 +32,6 @@ class Vampire {
     return(numberOfVampires);
   }
 
-  vampireWithName(name) {
-    var vampireWithGivenName =[];
-    if (this.name === name) {
-      vampireWithGivenName.push(this);
-    }
-      for (const offsp of this.offspring) {
-        const offspName = offsp.vampireWithName(name);
-        vampireWithGivenName = vampireWithGivenName.concat(offspName);
-    }
-      return vampireWithGivenName;
-  }
-
-
-  get allMillennialVampires() {
-    var millennnialVampires = [];
-    if(this.yearConverted > 1980) {
-      millennnialVampires.push(this);
-    }
-      for(const offsp of this.offspring){
-        const millennialVamp = offsp.allMillennialVampires;
-        millennnialVampires = millennnialVampires.concat(millennialVamp);
-
-      }
-    return millennnialVampires;
-
-  }
-
-
-
-  get totalDescendents() {
-    var totalDes = [];
-    totalDes.push(this);
-      for(const offsp of this.offspring){
-        const descendent = offsp.totalDescendents;
-        totalDes= totalDes.concat(descendent);
-
-      }
-    return totalDes.length;
-  }
-
   // Returns true if this vampire is more senior than the other vampire. (Who is closer to the original vampire)
   isMoreSeniorThan(vampire) {
     let numberOfVampires1 = 0;
@@ -98,17 +58,48 @@ class Vampire {
 
   // Returns the vampire object with that name, or null if no vampire exists with that name
   vampireWithName(name) {
-    
+     if (this.name === name) {
+      return this;
+    } else {
+      for (const offspring of this.offspring) {
+        let vamp = offspring.vampireWithName(name);
+        if (vamp) {
+          return vamp;
+        }
+      }
+    }
+    return null;
+
   }
 
   // Returns the total number of vampires that exist
   get totalDescendents() {
-    
+     let totalDes = 0;
+      // totalDes.push(this); // 2
+      totalDes ++;
+
+    for (const offspr of this.offspring) {
+      const decendents = offspr.totalDescendents; // 3
+      totalDes = totalDes + decendents ;
+    }
+    return totalDes;
   }
+
+
 
   // Returns an array of all the vampires that were converted after 1980
   get allMillennialVampires() {
-    
+    var millennnialVampires = [];
+    if(this.yearConverted > 1984) {
+      millennnialVampires.push(this);
+    }
+      for(const offsp of this.offspring){
+        const millennialVamp = offsp.allMillennialVampires;
+        millennnialVampires = millennnialVampires.concat(millennialVamp);
+
+      }
+      console.log(millennnialVampires);
+    return millennnialVampires;
   }
 
   /** Stretch **/
@@ -119,29 +110,6 @@ class Vampire {
   // * when comparing Ansel and Sarah, Ansel is the closest common anscestor.
   // * when comparing Ansel and Andrew, Ansel is the closest common anscestor.
   closestCommonAncestor(vampire) {
-  //   let numberOfVampires1 = 0;
-  //   let vampire1 = this;
-  //   while(vampire1.creator) {
-  //     numberOfVampires1++;
-  //     vampire1 = vampire1.creator;
-  //   }
-  //   let numberOfVampires2 = 0;
-  //   let vampire2 = vampire;
-  //   while(vampire2.creator) {
-  //     numberOfVampires2++;
-  //     vampire2 = vampire2.creator;
-  //   }
-  //   if(numberOfVampires1 < numberOfVampires2){
-  //     return vampire1;
-  //   } else {
-  //     return vampire2;
-  //   }
-
-  // }
-
-
-
-
 
   }
 }
