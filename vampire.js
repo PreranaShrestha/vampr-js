@@ -73,18 +73,6 @@ class Vampire {
   }
 
   // Returns the total number of vampires that exist
-  get totalDescendents() {
-     let totalDes = 0;
-      totalDes++;
-      console.log(totalDes);
-    for (const offspr of this.offspring) {
-      const decendents = offspr.totalDescendents; // 3
-      totalDes = totalDes + decendents ;
-    }
-
-    return totalDes;
-  }
-
 
 
   // Returns an array of all the vampires that were converted after 1980
@@ -101,6 +89,19 @@ class Vampire {
       console.log(millennnialVampires);
     return millennnialVampires;
   }
+  get totalDescendents() {
+    let totalDes = 0;
+
+     totalDes = this.offspring.length;
+
+    for (const offspr of this.offspring) {
+      const totalOffspr = offspr.totalDescendents;
+      totalDes = totalDes + totalOffspr;
+    }
+
+    return totalDes;
+  }
+
 
   /** Stretch **/
 
@@ -115,14 +116,10 @@ class Vampire {
       let vampire1 = this;
       ancestors1.push(vampire);
       ancestors.push(vampire1);
-
-      // ancestor1.push(vampire.creator);
-
       while(vampire.creator) {
         ancestors1.push(vampire.creator);
         vampire = vampire.creator;
       }
-
       while(vampire1.creator) {
         ancestors.push(vampire1.creator);
         vampire1 =vampire1.creator;
@@ -130,9 +127,7 @@ class Vampire {
       var commonAncestor = ancestors1.filter(function(val) {
        return ancestors.indexOf(val) != -1;
       });
-
       return commonAncestor[0];
-
 
   }
 }
@@ -153,7 +148,7 @@ const andrew = new Vampire("Andrew", "1990");
 elgort.addOffspring(andrew);
 
 
-console.log(original.vampireWithName("Andrew"));
+console.log(original.totalDescendents);
 // console.log(ansel.numberOfOffspring);
 
 
