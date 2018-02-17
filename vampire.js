@@ -75,13 +75,13 @@ class Vampire {
   // Returns the total number of vampires that exist
   get totalDescendents() {
      let totalDes = 0;
-      // totalDes.push(this); // 2
-      totalDes ++;
-
+      totalDes++;
+      console.log(totalDes);
     for (const offspr of this.offspring) {
       const decendents = offspr.totalDescendents; // 3
       totalDes = totalDes + decendents ;
     }
+
     return totalDes;
   }
 
@@ -110,6 +110,29 @@ class Vampire {
   // * when comparing Ansel and Sarah, Ansel is the closest common anscestor.
   // * when comparing Ansel and Andrew, Ansel is the closest common anscestor.
   closestCommonAncestor(vampire) {
+    let ancestors1 = [];
+      let ancestors =[];
+      let vampire1 = this;
+      ancestors1.push(vampire);
+      ancestors.push(vampire1);
+
+      // ancestor1.push(vampire.creator);
+
+      while(vampire.creator) {
+        ancestors1.push(vampire.creator);
+        vampire = vampire.creator;
+      }
+
+      while(vampire1.creator) {
+        ancestors.push(vampire1.creator);
+        vampire1 =vampire1.creator;
+      }
+      var commonAncestor = ancestors1.filter(function(val) {
+       return ancestors.indexOf(val) != -1;
+      });
+
+      return commonAncestor[0];
+
 
   }
 }
